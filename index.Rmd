@@ -1,7 +1,7 @@
 ---
 title: "Gov 50 Final Project"
-author: "Your Name Here"
-description: "My final project"
+author: "Emory Paul"
+description: "Final Project for GOV 50"
 output:
   distill::distill_article:
     self_contained: false
@@ -11,4 +11,4 @@ output:
 
 ## Project thoughts
 
-I am interested in exploring data related to...
+I am interested in exploring data related to homelessness, particularly as it relates to the experiences of different subsets of the unhoused population, such as chronically homeless individuals, veterans, and unaccompanied youth. For example, I'd love to investigate city-level data that would allow me to determine whether different strategies of service provision impact the magnitude of each subset of the unhoused population, though I am not committed to this idea. Overall, any data set related to homelessness or housing insecurity would be very interesting to explore given that these are my primary academic and professional interests. 
