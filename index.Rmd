@@ -21,9 +21,12 @@ Does the criminalization of homelessness contribute to lower rates of unsheltere
 
 ```{r}
 library(tidyverse)
-homelessnessdata <- read_csv("/Users/emorypaul/Downloads/05b_analysis_file_update.csv", 
+homelessdata <- read_csv("/Users/emorypaul/Downloads/05b_analysis_file_update_v1.csv", 
                              show_col_types = FALSE)
 
-head(homelessnessdata)
+homelessdata |>
+  filter(cocnumber == "TX-500" | cocnumber == "TX-503" | cocnumber == "TX-600" | cocnumber == "TX-601" | cocnumber == "TX-603" | cocnumber == "TX-604" | cocnumber == "TX-607"| cocnumber == "TX-611" | cocnumber == "TX-624" | cocnumber == "TX-700" | cocnumber == "TX-701") |>
+  ggplot(aes(x = hou_pol_hlessconduct_sleep, y = pit_tot_unshelt_pit_hud)) +
+  geom_point() + geom_smooth()
 ```
 
