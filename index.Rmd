@@ -25,8 +25,25 @@ homelessdata <- read_csv("/Users/emorypaul/Downloads/05b_analysis_file_update_v1
                              show_col_types = FALSE)
 
 homelessdata |>
-  filter(cocnumber == "TX-500" | cocnumber == "TX-503" | cocnumber == "TX-600" | cocnumber == "TX-601" | cocnumber == "TX-603" | cocnumber == "TX-604" | cocnumber == "TX-607"| cocnumber == "TX-611" | cocnumber == "TX-624" | cocnumber == "TX-700" | cocnumber == "TX-701") |>
-  ggplot(aes(x = hou_pol_hlessconduct_sleep, y = pit_tot_unshelt_pit_hud)) +
-  geom_point() + geom_smooth()
+  filter(cocnumber %in% c("TX-500", 
+                          "TX-503", 
+                          "TX-600", 
+                          "TX-601", 
+                          "TX-603", 
+                          "TX-604", 
+                          "TX-607", 
+                          "TX-611", 
+                          "TX-624", 
+                          "TX-700", 
+                          "TX-701"), 
+         year == 2015) |>
+  ggplot(aes(x = hou_pol_hlessconduct_sleep, 
+             y = pit_tot_unshelt_pit_hud, 
+             fill = cocnumber)) +
+  geom_col() +
+  labs(x = "Count of Sleeping, Camping, Lying/Sitting, and Vehicle Restriction Laws",
+       y = "Total Unsheltered Homeless Pop.",
+       title = "Outcome of Ordinances Criminalizing Homelessness")
 ```
 
+For my first data visualization, I subset the data to solely the Continuum of Cares (CoC) in Texas, a state notorious for laws criminalizing homelessness. I also subset it to the year of 2015. I then plotted the count of sleeping, camping, lying/sitting, and vehicle restriction laws in each CoC against the total unsheltered homeless population in each of those CoCs to visualize their relationship. Upon first glance, it appears that there does not seem to be a significant relationship between the variables, which is in line with my hypothesis. However, I will need to continue exploring the data and accounting for confounding variables to be able to draw firm conclusions. 
