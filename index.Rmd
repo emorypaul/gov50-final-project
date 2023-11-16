@@ -61,16 +61,15 @@ homelessdata <- homelessdata |>
                                 hou_pol_hlessconduct_food) |>
   ggplot(aes(x = criminalization_laws, 
              y = pit_tot_hless_pit_hud)) + 
-  geom_point() + 
-  geom_smooth() +
-   labs(x = "Total Number of Ordinances Criminalizing Homelessness",
+  geom_point(color = "steelblue") + 
+  geom_smooth(color = "red3") +
+   labs(x = "Total Number of Laws Criminalizing Homelessness",
        y = "Total Homeless Population",
-       title = "Relationship b/t Criminalization of Homelessness and Total Homeless Pop. in Urban Areas")
+       title = "Total Homeless Population vs. Criminalization of Homelessness in Urban Areas")
 
 homelessdata
 ```
 
-Largely Urban and Major City CoCs --> N = 832 . My question focuses on urban communities. 
-I created a new variable that is the total criminalization of 
-Does the criminalization of homelessness contribute to lower rates of unsheltered homelessness in urban communities?
-I hypothesize that the criminalization of homelessness does not significantly decrease rates of unsheltered homelessness in urban areas, thus demonstrating the futility of these punitive laws.
+As a reminder, my guiding research question is the following: Does the criminalization of homelessness contribute to lower rates of homelessness in urban communities?  To begin to answer this question, I first filtered the data by urbanicity, which is the degree to which a community is considered urban. Given that my research is focused on urban communities, I filtered the data to only include Continuum of Cares (CoCs) in "Largely Urban" or "Major City" areas. I also filtered the data to exclude CoCs which had a total homeless population above 30,000 since these CoCs are outliers that skewed my past plots. To better analyze the extent of criminalization in each community, I created a new variable, "criminalization_laws," that is the sum of all the ordinances criminalizing homelessness in each CoC, which includes the count of sleeping, camping, lying/sitting, and vehicle restriction laws, the count of loitering and vagrancy laws, the total count of prohibited conduct laws, the count of begging laws, and the count of food sharing laws. 
+
+Thereafter, to obtain the above visualization, I plotted the total homeless population in each urban CoC against the total sum of the ordinances criminalizing homelessness in each urban CoC. The resulting scatter plot appears to show a positive relationship between total number of laws criminalizing homelessness and the total homeless population in each urban CoC, thus hinting at the conclusion that laws criminalizing homelessness likely do not significantly decrease rates of homelessness in urban areas. This initial finding is a great start to confirming my hypothesis, which is that the criminalization of homelessness does not significantly decrease rates of homelessness in urban areas, thus demonstrating the futility of these punitive laws. However, for future analyses, I should consider whether there is a confounding variable influencing the relationship between the criminalization of homelessness and the total homelessness population in each community. For example, do communities with large homeless populations enact laws criminalizing homelessness at higher rates than others on account of the magnitude of the crisis? If so, this could weaken my findings. I will plan to investigate deeper as I progress through my analysis. 
