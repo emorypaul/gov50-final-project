@@ -53,6 +53,7 @@ For my first data visualization, I subset the data to solely the Continuum of Ca
 ```{r}
 homelessdata <- homelessdata |>
   filter(econ_urb_urbanicity == 3 | econ_urb_urbanicity == 4) |>
+  filter(pit_tot_hless_pit_hud < 30000) |>
   mutate(criminalization_laws = hou_pol_hlessconduct_total + 
                                 hou_pol_hlessconduct_sleep + 
                                 hou_pol_hlessconduct_loiter + 
@@ -61,11 +62,15 @@ homelessdata <- homelessdata |>
   ggplot(aes(x = criminalization_laws, 
              y = pit_tot_hless_pit_hud)) + 
   geom_point() + 
-  geom_smooth()
+  geom_smooth() +
+   labs(x = "Total Number of Ordinances Criminalizing Homelessness",
+       y = "Total Homeless Population",
+       title = "Relationship b/t Criminalization of Homelessness and Total Homeless Pop. in Urban Areas")
 
 homelessdata
 ```
 
 Largely Urban and Major City CoCs --> N = 832 . My question focuses on urban communities. 
+I created a new variable that is the total criminalization of 
 Does the criminalization of homelessness contribute to lower rates of unsheltered homelessness in urban communities?
 I hypothesize that the criminalization of homelessness does not significantly decrease rates of unsheltered homelessness in urban areas, thus demonstrating the futility of these punitive laws.
