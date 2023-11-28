@@ -72,7 +72,7 @@ homelessdata_data <- homelessdata |>
 fit <- lm(pit_tot_hless_pit_hud ~ criminalization_laws, data = homelessdata_data) 
 fit2 <- lm(pit_tot_hless_pit_hud ~ criminalization_laws + (confounder), data = homelessdata_data) 
 
-## can add confounders to the data analysis to enhance my analysis and description of the data. 
+## can add confounders to the data analysis to enhance my analysis and description of the data. use the coefficients for analysis as well
 
 homelessdata
 fit
