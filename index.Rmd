@@ -70,12 +70,16 @@ homelessdata_data <- homelessdata |>
        title = "Total Homeless Population vs. Criminalization of Homelessness in Urban Areas")
 
 fit <- lm(pit_tot_hless_pit_hud ~ criminalization_laws, data = homelessdata_data) 
-fit2 <- lm(pit_tot_hless_pit_hud ~ criminalization_laws + (confounder), data = homelessdata_data) 
+fit2 <- lm(pit_tot_hless_pit_hud ~ criminalization_laws + total_rent_inventory_acs5yr, data = homelessdata_data) 
 
-## can add confounders to the data analysis to enhance my analysis and description of the data. use the coefficients for analysis as well
+
+## can add confounders to the data analysis to enhance my analysis and description of the data. use the coefficients for analysis as well ; Potential confounders: hou_pol_totalind_hud (length of time homeless ES, SH, and TH), universe hou_pol_totalday_hud (length of time homeless; ES, SH, and TH total days), hou_pol_fedfundcoc	(CoC federal funding - HUD), variables for the total number of shelter beds, dem_pop_pop_census	(total population, intercensal estimate), dem_soc_black_census	(total black alone (non-hispanic) population, intercensal estimate) and other racial categories, total_rent_inventory_acs5yr	(total number of rental units; occupied, for rent, and rented but not occupied) and housing units variable, econ_labor_incineq_acs5yr (gini index of income inequality by households), econ_labor_medinc_acs5yr	(median household income), econ_labor_pov_acs5yr	(population in poverty to total population with poverty status determined), bunch of other data talking about social safety net supports in each area, eviction data, temperature/weather, crime in that area?
+
+## should I filter by homeless per capita ? pit_hless_pit_hud_share	(rate of total homeless per 10,000 people)
 
 homelessdata
 fit
+fit2
 ```
 
 As a reminder, my guiding research question is the following: How does the criminalization of homelessness relate to homelessness in urban communities?  To begin to answer this question, I first filtered the data by urbanicity, which is the degree to which a community is considered urban. Given that my research is focused on urban communities, I filtered the data to only include Continuum of Cares (CoCs) in "Largely Urban" or "Major City" areas. I also filtered the data to exclude CoCs which had a total homeless population above 30,000 since these CoCs are outliers that skewed my past plots. To better analyze the extent of criminalization in each community, I created a new variable, "criminalization_laws," that is the sum of all the ordinances criminalizing homelessness in each CoC, which includes the count of sleeping, camping, lying/sitting, and vehicle restriction laws, the count of loitering and vagrancy laws, the total count of prohibited conduct laws, the count of begging laws, and the count of food sharing laws. 
