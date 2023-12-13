@@ -9,9 +9,21 @@ output:
 
 ## Introduction
 
-
+With the increase of unsheltered homelessness in communities across the nation, policy makers, service providers, and members of the public have to begun to call for real, lasting solutions to this ever-expanding humanitarian crisis. While some elected officials have responded to these calls with benevolent policies of supportive services and affordable housing, others have responded with punitive laws criminalizing the survival tactics of people experiencing homelessness, such as sleeping outside and receiving food from passersby. Recent research has detailed how these laws, motivated by anti-homeless sentiment, funnel the unhoused into the homelessness-jail cycle, further exacerbating their experience of homelessness (Bauman). With this understanding in mind, I set out to investigate this issue with the following research question: What is the relationship between laws criminalizing homelessness and the amount of unsheltered homelessness in urban communities? In this study, I plan to analyze the relationship between the community-level adoption of laws criminalizing homelessness through “quality of life” ordinances and the extent of homelessness in those communities, which will allow me to better understand the effectiveness or lack thereof of these laws. I hypothesize that the criminalization of homelessness is associated with higher levels of homelessness in urban areas, pointing to the harmful nature of criminalization. The null hypothesis, in this case, would be that there is no relationship between the two variables. 
 
 ## The Data
+
+My sample consists of an aggregation of community-level data points for the over 400 Continuum of Cares (CoCs) across the United States. CoCs, the unit of analysis for this study, are the local planning bodies responsible for coordinating funding for homeless services in each community. 
+
+The key dependent variable of interest is the total amount of unsheltered homelessness in each urban CoC, which is coded as “pit_tot_unshelt_pit_hud." This  hence why this study is cross-sectional in design. 
+
+
+The key independent variable of interest is the total number of  municipal ordinances criminalizing homelessness in each CoC, which I measure through the count of sleeping, camping, lying/sitting, and vehicle restriction laws (hou_pol_hlessconduct_sleep), count of loitering and vagrancy laws (hou_pol_hlessconduct_loiter), total count of prohibited conduct laws (hou_pol_hlessconduct_total), count of begging laws (hou_pol_hlessconduct_beg), and count of food sha=ring laws (hou_pol_hlessconduct_food). These data points were collected through an analysis of each community's "quality of life" ordinances by the National Law Center on Homelessness and Poverty (NLCHP). Additionally, to identify possible confounders, I measured the relationship between median gross rent for renter-occupied housing units and total unsheltered homelessness in each community. This variable was collected through surveys by the Census Bureau. 
+
+I chose to focus on urban communities given that they, on average, have larger amounts of unsheltered homelessness as well as broader availability of data on this population than rural communities, which provides for a better study. Similarly, I chose to focus on unsheltered homelessness given that laws criminalizing homelessness target those sleeping outside, as opposed to those sleeping in shelters, given their heightened visibility. 
+
+If I observe a positive relationship between total number of laws criminalizing homelessness and amount of unsheltered homelessness in urban communities, this would provide support for my hypothesis. However, if I observe a negative relationip in unsheltered homelessness over time in communities where there has been an increase in laws criminalizing homelessness, this would provide evidence against my hypothesis. When I run a regression of the laws criminalizing homelessness on the rates of unsheltered homelessness variable, a near-zero/zero or a positive, significant coefficient would demonstrate support for my hypothesis.
+
 
 ```{r}
 library(tidyverse)
@@ -21,6 +33,11 @@ homelessdata <- read_csv("/Users/emorypaul/Downloads/05b_analysis_file_update_v1
 ```
 
 ## Filtering and Mutating the Data 
+
+The original data set lacks an aggregate variable of all the "quality of life" ordinances in each community, so I mutated the data to include a new variable, `criminalization_laws`, which is the total sum of all "quality of life" ordinances criminalizing
+
+Given my study's focus on urban communities, I created a subset of the data named `homelessdata_urban` that only includes Continuum of Cares (CoCs) in "Largely Urban" or "Major City" areas. Within this same subset, I also filtered the data to exclude CoCs which had a total unsheltered homeless population above 20,000 since these communities are outliers that skewed my past plots. 
+
 
 ```{r}
 homelessdata <- homelessdata |>
@@ -38,6 +55,8 @@ homelessdata_urban <- homelessdata |>
 
 ## Summary of the Dependent Variable
 
+As a summary of the dependent variable in my study, I plotted the total unsheltered homelessness in all CoCs over time (2010-2017). 
+
 ```{r}
 summary_homeless <- homelessdata_urban |>
   ggplot(aes(x = year, 
@@ -45,7 +64,7 @@ summary_homeless <- homelessdata_urban |>
   geom_col(fill = "aquamarine4") +
   labs(x = "Year",
        y = "Total Unsheltered Homeless Population",
-       title = "Total Unsheltered Homeless Population Over Time")
+       title = "Total Unsheltered Homeless Population Over Time (Figure 1)")
 
 summary_homeless
 ```
@@ -80,7 +99,7 @@ homeless_criminalization <- homelessdata_urban |>
   geom_smooth(method = "lm", se = FALSE, color = "brown3", size = 1.5) +
    labs(x = "Total Number of Laws Criminalizing Homelessness",
        y = "Total Unsheltered Homeless Population",
-       title = "Criminalization of Homelessness in Urban CoCs")
+       title = "Criminalization of Homelessness in Urban CoCs (Figure 2")
 
 homeless_criminalization
 ```
@@ -114,7 +133,7 @@ homeless_rentprice <- homelessdata_urban |>
   geom_smooth(method = "lm", se = FALSE, color = "brown3", size = 1.5) +
   labs(x = "Median Gross Rent (Renter-Occupied Housing Units)",
        y = "Total Unsheltered Homeless Population",
-       title = "Total Unsheltered Homeless Pop. vs. Median Gross Rent")
+       title = "Total Unsheltered Homeless Pop. vs. Median Gross Rent (Figure 3)")
 
 homeless_rentprice
 ```
@@ -124,10 +143,12 @@ homeless_rentprice
 
 ## Conclusion
 
-
+Overall, there appears to be a positive relationship between the criminalization of homelessness through "quality of life" ordinances and the amount of unsheltered homelessness in urban communities. 
 
 
 ## Works Cited
+
+Bauman, Tristia. “Housing Not Handcuffs: Ending the Criminalization of Homelessness in U.S. Cities.” National Homelessness Law Center, homelesslaw.org/wp-content/uploads/2018/10/Housing-Not-Handcuffs.pdf. 
 
 Nisar, Hiren, et al. “Market Predictors of Homelessness: How Housing and Community Factors Shape Homelessness Rates within Continuums of Care.” HUD: Office of Policy Development and Research, 2019, www.huduser.gov/portal/publications/Market-Predictors-of-Homelessness.html.
 
