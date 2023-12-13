@@ -19,7 +19,7 @@ The key dependent variable of interest is the total amount of unsheltered homele
 
 I chose to focus on urban communities given that they, on average, have larger amounts of unsheltered homelessness as well as broader availability of data on this population than rural communities, which provides for a better study. Similarly, I chose to focus on unsheltered homelessness given that laws criminalizing homelessness target those sleeping outside, as opposed to those sleeping in shelters, given their heightened visibility. 
 
-If I observe a positive relationship between total number of laws criminalizing homelessness and amount of unsheltered homelessness in urban communities, this would provide support for my hypothesis. However, if I observe a negative relationship or if the null hypothesis is confirmed through the lack of any relationship, this would provide evidence against my hypothesis. When I run a regression of the two variables, a positive, statistically significant coefficient on the variable measuring criminalization would demonstrate support for my hypothesis.
+If I observe a positive relationship between total number of laws criminalizing homelessness and amount of unsheltered homelessness in urban communities, this would provide support for my hypothesis. However, if I observe a negative relationship or if the null hypothesis is confirmed through the lack of any relationship, this would provide evidence against my hypothesis. When I run a regression of the two variables, a positive coefficient with a p-value less than an alpha of 0.05 would demonstrate support for my hypothesis.
 
 
 ```{r}
@@ -83,6 +83,7 @@ modelsummary::modelsummary(fit_main,
                            coef_map = var_labels,
                            gof_map = c("nobs", "r.squared", "adj.r.squared"))
 ```
+
 
 
 ## Plot of Main Regression
