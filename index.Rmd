@@ -23,100 +23,113 @@ homelessdata <- read_csv("/Users/emorypaul/Downloads/05b_analysis_file_update_v1
 
 ```{r}
 homelessdata <- homelessdata |>
-  filter(econ_urb_urbanicity == 3 | econ_urb_urbanicity == 4) |>
   mutate(criminalization_laws = hou_pol_hlessconduct_total + 
                                 hou_pol_hlessconduct_sleep + 
                                 hou_pol_hlessconduct_loiter + 
                                 hou_pol_hlessconduct_beg +
                                 hou_pol_hlessconduct_food)
+
+homelessdata_urban <- homelessdata |>
+  filter(econ_urb_urbanicity == 3 | econ_urb_urbanicity == 4) |>
+  filter(pit_tot_unshelt_pit_hud < 20000)
 ```
-
-
 
 
 ## Summary of the Dependent Variable
 
 ```{r}
-homelessdata |>
-  ggplot(data = general_homeless, aes(x = year, 
-             y = pit_unshelt_pit_hud_share)) +
-  geom_col()
+summary_homeless <- homelessdata_urban |>
+  ggplot(aes(x = year, 
+             y = pit_tot_unshelt_pit_hud)) +
+  geom_col(fill = "aquamarine4") +
+  labs(x = "Year",
+       y = "Total Unsheltered Homeless Population",
+       title = "Total Unsheltered Homeless Population Over Time")
+
+summary_homeless
 ```
-
-
 
 
 ## Results
 
+## Main Regression
+
 ```{r}
- homeless_criminalization <- homelessdata |>
+fit_main <- lm(pit_tot_unshelt_pit_hud ~ criminalization_laws, data = homelessdata_urban)
+
+var_labels <- c("(Intercept)" = "Intercept",
+                "criminalization_laws" = "Laws Criminalizing Homelessness")
+
+modelsummary::modelsummary(fit_main,
+                           statistic = c("s.e. = {std.error}",
+                                         "p = {p.value}"),
+                           coef_map = var_labels,
+                           gof_map = c("nobs", "r.squared", "adj.r.squared"))
+```
+
+
+## Plot of Main Regression
+
+
+```{r}
+homeless_criminalization <- homelessdata_urban |>
   ggplot(aes(x = criminalization_laws, 
              y = pit_tot_unshelt_pit_hud)) + 
-  geom_point(color = "steelblue") + 
-  geom_smooth(method = "lm", se = FALSE, color = "indianred1", size = 1.5) +
+  geom_point(color = "aquamarine4") + 
+  geom_smooth(method = "lm", se = FALSE, color = "brown3", size = 1.5) +
    labs(x = "Total Number of Laws Criminalizing Homelessness",
        y = "Total Unsheltered Homeless Population",
-       title = "Total Unsheltered Homeless Pop. vs. Criminalization in Urban CoCs")
+       title = "Criminalization of Homelessness in Urban CoCs")
 
 homeless_criminalization
-
-fit <- lm(pit_tot_unshelt_pit_hud ~ criminalization_laws, data = total_homeless_criminalization) 
-fit2 <- lm(pit_tot_unshelt_pit_hud ~ criminalization_laws + total_rent_inventory_acs5yr, data = total_homeless_criminalization) 
-
-fit
-fit2
 ```
 
 
-## Results from  Analysis
+## Multiple Regression
 
 ```{r}
-percapita_homeless_criminalization <- homelessdata |>
-  filter(econ_urb_urbanicity == 3 | econ_urb_urbanicity == 4) |>
-  mutate(criminalization_laws = hou_pol_hlessconduct_total + 
-                                hou_pol_hlessconduct_sleep + 
-                                hou_pol_hlessconduct_loiter + 
-                                hou_pol_hlessconduct_beg +
-                                hou_pol_hlessconduct_food)
+fit_multiple <- lm(pit_tot_unshelt_pit_hud ~ criminalization_laws + hou_mkt_medrentgross_acs5yr,
+                   data = homelessdata_urban)
 
-  ggplot(data = percapita_homeless_criminalization, aes(x = criminalization_laws, 
-             y = pit_unshelt_pit_hud_share)) + 
-  geom_point(color = "steelblue") + 
-  geom_smooth(method = "lm", se = FALSE, color = "indianred1", size = 1.5) +
-   labs(x = "Total Number of Laws Criminalizing Homelessness",
-       y = "Total Homeless Population",
-       title = "Total Homeless Population vs. Criminalization of Homelessness in Urban Areas")
+var_labels <- c("(Intercept)" = "Intercept",
+                "criminalization_laws" = "Laws Criminalizing Homelessness",
+                "hou_mkt_medrentgross_acs5yr" = "Median Gross Rent (Renter-Occupied Housing Units)")
 
-fit3 <- lm(pit_unshelt_pit_hud_share ~ criminalization_laws, data = percapita_homeless_criminalization) 
-fit4 <- lm(pit_unshelt_pit_hud_share ~ criminalization_laws + total_rent_inventory_acs5yr, data = percapita_homeless_criminalization) 
-
-fit3
-fit4
+modelsummary::modelsummary(fit_multiple,
+                           statistic = c("s.e. = {std.error}",
+                                         "p = {p.value}"),
+                           coef_map = var_labels,
+                           gof_map = c("nobs", "r.squared", "adj.r.squared"))
 ```
 
 
+## Plot of Multiple Regression
 
 ```{r}
-percapita_homeless_criminalization <- homelessdata |>
-  filter(econ_urb_urbanicity == 3 | econ_urb_urbanicity == 4) |>
-  mutate(criminalization_laws = hou_pol_hlessconduct_total + 
-                                hou_pol_hlessconduct_sleep + 
-                                hou_pol_hlessconduct_loiter + 
-                                hou_pol_hlessconduct_beg +
-                                hou_pol_hlessconduct_food)
+homeless_rentprice <- homelessdata_urban |>
+  ggplot(aes(x =  hou_mkt_medrentgross_acs5yr, 
+             y = pit_tot_unshelt_pit_hud)) + 
+  geom_point(color = "aquamarine4") + 
+  geom_smooth(method = "lm", se = FALSE, color = "brown3", size = 1.5) +
+  labs(x = "Median Gross Rent (Renter-Occupied Housing Units)",
+       y = "Total Unsheltered Homeless Population",
+       title = "Total Unsheltered Homeless Pop. vs. Median Gross Rent")
 
-  ggplot(data = percapita_homeless_criminalization, aes(x = econ_labor_incineq_acs5yr, 
-             y = pit_tot_unshelt_pit_hud)) +
-    geom_point() + 
-    geom_smooth()
+homeless_rentprice
 ```
+
+
+
 
 ## Conclusion
 
 
+
+
 ## Works Cited
 
-Nisar, Hiren, et al. “Market Predictors of Homelessness: How Housing and Community Factors Shape Homelessness Rates within Continuums of Care.” HUD: Office of Policy Development and Research, 2019, www.huduser.gov/portal/publications/Market-Predictors-of-Homelessness.html. 
+Nisar, Hiren, et al. “Market Predictors of Homelessness: How Housing and Community Factors Shape Homelessness Rates within Continuums of Care.” HUD: Office of Policy Development and Research, 2019, www.huduser.gov/portal/publications/Market-Predictors-of-Homelessness.html.
 
+Nisar, Hiren, et al. "Homeless Prediction Model.” HUD: Office of Policy Development and Research, 2019, https://www.huduser.gov/portal/datasets/hpmd.html.
 
 
