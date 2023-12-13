@@ -7,84 +7,116 @@ output:
     self_contained: false
 ---
 
+## Introduction
 
 
-## Project thoughts
-
-I am interested in exploring data related to homelessness, particularly as it relates to the experiences of different subsets of the unhoused population, such as chronically homeless individuals, veterans, and unaccompanied youth. For example, I'd love to investigate city-level data that would allow me to determine whether different strategies of service provision impact the magnitude of each subset of the unhoused population, though I am not committed to this idea. Overall, any data set related to homelessness or housing insecurity would be very interesting to explore given that these are my primary academic and professional interests. 
-
-## Research Proposal
-
-Does the criminalization of homelessness contribute to lower rates of unsheltered homelessness in urban communities? In this study, I plan to analyze the extent to which the community-level adoption of laws criminalizing homelessness through “quality of life” ordinances decrease rates of unsheltered homelessness. I hypothesize that the criminalization of homelessness does not significantly decrease rates of unsheltered homelessness in urban areas, thus demonstrating the futility of these punitive laws. Recently, there has been a proliferation of ordinances that criminalize the survival tactics of people experiencing homelessness in cities across the country. These laws, motivated by anti-homeless sentiment, funnel the unhoused into the homelessness-jail cycle, only further exacerbating their experience of homelessness. My sample is comprised of an aggregation of community-level data points for the over 400 Continuum of Cares (CoCs) across the United States, and I plan to filter these CoCs based on the "major_city" indicator variable in order to develop a sample of CoCs in urban communities. My unit of analysis is a Continuum of Care (CoC), which is a local planning body responsible for coordinating funding for homeless services in each community. The explanatory variables of interest are the number of municipal ordinances criminalizing homelessness in each community, which I plan to measure through the count of sleeping, camping, lying/sitting, and vehicle restriction laws (hou_pol_hlessconduct_sleep), count of loitering and vagrancy laws (hou_pol_hlessconduct_loiter), total count of prohibited conduct laws (hou_pol_hlessconduct_total), count of begging laws (hou_pol_hlessconduct_beg), and count of food sha=ring laws (hou_pol_hlessconduct_food). The outcome variable is the rate of unsheltered homeless per 10,000 people, which is coded as “pit_unshelt_pit_hud_share.” This variable is measured as the proportion of unsheltered homeless per 10,000 people in each CoC. If I do not observe a significant effect or if I observe a substantial increase in unsheltered homelessness over time in communities where there has been an increase in laws criminalizing homelessness, this would provide support for my hypothesis. However, if I observe a significant decrease in unsheltered homelessness over time in communities where there has been an increase in laws criminalizing homelessness, this would provide evidence against my hypothesis. When I run a regression of the laws criminalizing homelessness on the rates of unsheltered homelessness variable, a near-zero/zero or a positive, significant coefficient would demonstrate support for my hypothesis.
-
-## First Data Visualization
+## The Data
 
 ```{r}
 library(tidyverse)
+library(broom)
 homelessdata <- read_csv("/Users/emorypaul/Downloads/05b_analysis_file_update_v1.csv", 
                              show_col_types = FALSE)
-
-homelessdata |>
-  filter(cocnumber %in% c("TX-500", 
-                          "TX-503", 
-                          "TX-600", 
-                          "TX-601", 
-                          "TX-603", 
-                          "TX-604", 
-                          "TX-607", 
-                          "TX-611", 
-                          "TX-624", 
-                          "TX-700", 
-                          "TX-701"), 
-         year == 2015) |>
-  ggplot(aes(x = hou_pol_hlessconduct_sleep, 
-             y = pit_tot_unshelt_pit_hud, 
-             fill = cocnumber)) +
-  geom_col() +
-  labs(x = "Count of Sleeping, Camping, Lying/Sitting, and Vehicle Restriction Laws",
-       y = "Total Unsheltered Homeless Pop.",
-       title = "Outcome of Ordinances Criminalizing Homelessness")
 ```
 
-For my first data visualization, I subset the data to solely the Continuum of Cares (CoC) in Texas, a state notorious for laws criminalizing homelessness. I also subset it to the year of 2015. I then plotted the count of sleeping, camping, lying/sitting, and vehicle restriction laws in each CoC against the total unsheltered homeless population in each of those CoCs to visualize their relationship. Upon first glance, it appears that there does not seem to be a significant relationship between the variables, which is in line with my hypothesis. However, I will need to continue exploring the data and accounting for confounding variables to be able to draw firm conclusions.
-
-## Results from One Analysis
+## Filtering and Mutating the Data 
 
 ```{r}
-library(broom)
-homelessdata_data <- homelessdata |>
+homelessdata <- homelessdata |>
   filter(econ_urb_urbanicity == 3 | econ_urb_urbanicity == 4) |>
-  filter(pit_tot_hless_pit_hud < 30000) |>
+  mutate(criminalization_laws = hou_pol_hlessconduct_total + 
+                                hou_pol_hlessconduct_sleep + 
+                                hou_pol_hlessconduct_loiter + 
+                                hou_pol_hlessconduct_beg +
+                                hou_pol_hlessconduct_food)
+```
+
+
+
+
+## Summary of the Dependent Variable
+
+```{r}
+homelessdata |>
+  ggplot(data = general_homeless, aes(x = year, 
+             y = pit_unshelt_pit_hud_share)) +
+  geom_col()
+```
+
+
+
+
+## Results
+
+```{r}
+ homeless_criminalization <- homelessdata |>
+  ggplot(aes(x = criminalization_laws, 
+             y = pit_tot_unshelt_pit_hud)) + 
+  geom_point(color = "steelblue") + 
+  geom_smooth(method = "lm", se = FALSE, color = "indianred1", size = 1.5) +
+   labs(x = "Total Number of Laws Criminalizing Homelessness",
+       y = "Total Unsheltered Homeless Population",
+       title = "Total Unsheltered Homeless Pop. vs. Criminalization in Urban CoCs")
+
+homeless_criminalization
+
+fit <- lm(pit_tot_unshelt_pit_hud ~ criminalization_laws, data = total_homeless_criminalization) 
+fit2 <- lm(pit_tot_unshelt_pit_hud ~ criminalization_laws + total_rent_inventory_acs5yr, data = total_homeless_criminalization) 
+
+fit
+fit2
+```
+
+
+## Results from  Analysis
+
+```{r}
+percapita_homeless_criminalization <- homelessdata |>
+  filter(econ_urb_urbanicity == 3 | econ_urb_urbanicity == 4) |>
   mutate(criminalization_laws = hou_pol_hlessconduct_total + 
                                 hou_pol_hlessconduct_sleep + 
                                 hou_pol_hlessconduct_loiter + 
                                 hou_pol_hlessconduct_beg +
                                 hou_pol_hlessconduct_food)
 
-  ggplot(data = homelessdata_data, aes(x = criminalization_laws, 
-             y = pit_tot_hless_pit_hud)) + 
+  ggplot(data = percapita_homeless_criminalization, aes(x = criminalization_laws, 
+             y = pit_unshelt_pit_hud_share)) + 
   geom_point(color = "steelblue") + 
   geom_smooth(method = "lm", se = FALSE, color = "indianred1", size = 1.5) +
    labs(x = "Total Number of Laws Criminalizing Homelessness",
        y = "Total Homeless Population",
        title = "Total Homeless Population vs. Criminalization of Homelessness in Urban Areas")
 
-fit <- lm(pit_tot_hless_pit_hud ~ criminalization_laws, data = homelessdata_data) 
-fit2 <- lm(pit_tot_hless_pit_hud ~ criminalization_laws + total_rent_inventory_acs5yr, data = homelessdata_data) 
+fit3 <- lm(pit_unshelt_pit_hud_share ~ criminalization_laws, data = percapita_homeless_criminalization) 
+fit4 <- lm(pit_unshelt_pit_hud_share ~ criminalization_laws + total_rent_inventory_acs5yr, data = percapita_homeless_criminalization) 
 
-
-## can add confounders to the data analysis to enhance my analysis and description of the data. use the coefficients for analysis as well ; Potential confounders: hou_pol_totalind_hud (length of time homeless ES, SH, and TH), universe hou_pol_totalday_hud (length of time homeless; ES, SH, and TH total days), hou_pol_fedfundcoc	(CoC federal funding - HUD), variables for the total number of shelter beds, dem_pop_pop_census	(total population, intercensal estimate), dem_soc_black_census	(total black alone (non-hispanic) population, intercensal estimate) and other racial categories, total_rent_inventory_acs5yr	(total number of rental units; occupied, for rent, and rented but not occupied) and housing units variable, econ_labor_incineq_acs5yr (gini index of income inequality by households), econ_labor_medinc_acs5yr	(median household income), econ_labor_pov_acs5yr	(population in poverty to total population with poverty status determined), bunch of other data talking about social safety net supports in each area, eviction data, temperature/weather, crime in that area?
-
-## should I filter by homeless per capita ? pit_hless_pit_hud_share	(rate of total homeless per 10,000 people)
-
-homelessdata
-fit
-fit2
+fit3
+fit4
 ```
 
-As a reminder, my guiding research question is the following: How does the criminalization of homelessness relate to homelessness in urban communities?  To begin to answer this question, I first filtered the data by urbanicity, which is the degree to which a community is considered urban. Given that my research is focused on urban communities, I filtered the data to only include Continuum of Cares (CoCs) in "Largely Urban" or "Major City" areas. I also filtered the data to exclude CoCs which had a total homeless population above 30,000 since these CoCs are outliers that skewed my past plots. To better analyze the extent of criminalization in each community, I created a new variable, "criminalization_laws," that is the sum of all the ordinances criminalizing homelessness in each CoC, which includes the count of sleeping, camping, lying/sitting, and vehicle restriction laws, the count of loitering and vagrancy laws, the total count of prohibited conduct laws, the count of begging laws, and the count of food sharing laws. 
 
-Thereafter, to obtain the above visualization, I plotted the total homeless population in each urban CoC against the total sum of the ordinances criminalizing homelessness in each urban CoC. The resulting scatter plot appears to show a positive relationship between total number of laws criminalizing homelessness and the total homeless population in each urban CoC, thus hinting at the conclusion that laws criminalizing homelessness likely do not significantly decrease rates of homelessness in urban areas. This initial finding is a great start to confirming my hypothesis, which is that the criminalization of homelessness does not significantly decrease rates of homelessness in urban areas, thus demonstrating the futility of these punitive laws. However, for future analyses, I should consider whether there is a confounding variable influencing the relationship between the criminalization of homelessness and the total homelessness population in each community. For example, do communities with large homeless populations enact laws criminalizing homelessness at higher rates than others on account of the magnitude of the crisis? If so, this could weaken my findings. I will plan to investigate deeper as I progress through my analysis. 
 
-**added in a line of best fit (regression line)
+```{r}
+percapita_homeless_criminalization <- homelessdata |>
+  filter(econ_urb_urbanicity == 3 | econ_urb_urbanicity == 4) |>
+  mutate(criminalization_laws = hou_pol_hlessconduct_total + 
+                                hou_pol_hlessconduct_sleep + 
+                                hou_pol_hlessconduct_loiter + 
+                                hou_pol_hlessconduct_beg +
+                                hou_pol_hlessconduct_food)
+
+  ggplot(data = percapita_homeless_criminalization, aes(x = econ_labor_incineq_acs5yr, 
+             y = pit_tot_unshelt_pit_hud)) +
+    geom_point() + 
+    geom_smooth()
+```
+
+## Conclusion
+
+
+## Works Cited
+
+Nisar, Hiren, et al. “Market Predictors of Homelessness: How Housing and Community Factors Shape Homelessness Rates within Continuums of Care.” HUD: Office of Policy Development and Research, 2019, www.huduser.gov/portal/publications/Market-Predictors-of-Homelessness.html. 
+
+
 
