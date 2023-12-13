@@ -15,14 +15,11 @@ With the increase of unsheltered homelessness in communities across the nation, 
 
 My sample consists of an aggregation of community-level data points for the over 400 Continuum of Cares (CoCs) across the United States. CoCs, the unit of analysis for this study, are the local planning bodies responsible for coordinating funding for homeless services in each community. 
 
-The key dependent variable of interest is the total amount of unsheltered homelessness in each urban CoC, which is coded as “pit_tot_unshelt_pit_hud." This  hence why this study is cross-sectional in design. 
-
-
-The key independent variable of interest is the total number of  municipal ordinances criminalizing homelessness in each CoC, which I measure through the count of sleeping, camping, lying/sitting, and vehicle restriction laws (hou_pol_hlessconduct_sleep), count of loitering and vagrancy laws (hou_pol_hlessconduct_loiter), total count of prohibited conduct laws (hou_pol_hlessconduct_total), count of begging laws (hou_pol_hlessconduct_beg), and count of food sha=ring laws (hou_pol_hlessconduct_food). These data points were collected through an analysis of each community's "quality of life" ordinances by the National Law Center on Homelessness and Poverty (NLCHP). Additionally, to identify possible confounders, I measured the relationship between median gross rent for renter-occupied housing units and total unsheltered homelessness in each community. This variable was collected through surveys by the Census Bureau. 
+The key dependent variable of interest is the total amount of unsheltered homelessness in each urban CoC, which is coded as “pit_tot_unshelt_pit_hud." This variable is collected through in-person surveys on a single night in January, hence this study's cross-sectional design. The key independent variable of interest is the total number of  municipal ordinances criminalizing homelessness in each CoC, which I measure through the count of sleeping, camping, lying/sitting, and vehicle restriction laws (hou_pol_hlessconduct_sleep), count of loitering and vagrancy laws (hou_pol_hlessconduct_loiter), total count of prohibited conduct laws (hou_pol_hlessconduct_total), count of begging laws (hou_pol_hlessconduct_beg), and count of food sha=ring laws (hou_pol_hlessconduct_food). These data points were collected through an analysis of each community's "quality of life" ordinances by the National Law Center on Homelessness and Poverty (NLCHP). Additionally, to identify possible confounders, I measured the relationship between median gross rent for renter-occupied housing units and total unsheltered homelessness in each community. This variable was collected through surveys by the Census Bureau. 
 
 I chose to focus on urban communities given that they, on average, have larger amounts of unsheltered homelessness as well as broader availability of data on this population than rural communities, which provides for a better study. Similarly, I chose to focus on unsheltered homelessness given that laws criminalizing homelessness target those sleeping outside, as opposed to those sleeping in shelters, given their heightened visibility. 
 
-If I observe a positive relationship between total number of laws criminalizing homelessness and amount of unsheltered homelessness in urban communities, this would provide support for my hypothesis. However, if I observe a negative relationip in unsheltered homelessness over time in communities where there has been an increase in laws criminalizing homelessness, this would provide evidence against my hypothesis. When I run a regression of the laws criminalizing homelessness on the rates of unsheltered homelessness variable, a near-zero/zero or a positive, significant coefficient would demonstrate support for my hypothesis.
+If I observe a positive relationship between total number of laws criminalizing homelessness and amount of unsheltered homelessness in urban communities, this would provide support for my hypothesis. However, if I observe a negative relationship or if the null hypothesis is confirmed through the lack of any relationship, this would provide evidence against my hypothesis. When I run a regression of the two variables, a positive, statistically significant coefficient on the variable measuring criminalization would demonstrate support for my hypothesis.
 
 
 ```{r}
@@ -55,7 +52,7 @@ homelessdata_urban <- homelessdata |>
 
 ## Summary of the Dependent Variable
 
-As a summary of the dependent variable in my study, I plotted the total unsheltered homelessness in all CoCs over time (2010-2017). 
+As a summary of the main dependent variable in my study, I plotted the total amount unsheltered homelessness in all CoCs over time (2010-2017). The below bar plot indicates that since 2014, unsheltered homelessness has been increasing in communities across the United States. With this study, I hope to better understand whther the criminalization of homelessness has contributed to this increase. 
 
 ```{r}
 summary_homeless <- homelessdata_urban |>
