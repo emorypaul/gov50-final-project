@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-1-1.png","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-1-1.png","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/figure-html5/unnamed-chunk-5-1.png","index_files/figure-html5/unnamed-chunk-7-1.png","index_files/figure-html5/unnamed-chunk-8-1.png","index_files/figure-html5/unnamed-chunk-9-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1473,6 +1473,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
   <!--/radix_placeholder_distill-->
   <script src="index_files/header-attrs-2.24/header-attrs.js"></script>
+  <script src="index_files/kePrint-0.0.1/kePrint.js"></script>
+  <link href="index_files/lightable-0.0.1/lightable.css" rel="stylesheet" />
   <script src="index_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
   <script src="index_files/popper-2.6.0/popper.min.js"></script>
   <link href="index_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -1517,66 +1519,374 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 
 <div class="d-article">
-<h2 id="project-thoughts">Project thoughts</h2>
-<p>I am interested in exploring data related to homelessness, particularly as it relates to the experiences of different subsets of the unhoused population, such as chronically homeless individuals, veterans, and unaccompanied youth. For example, I’d love to investigate city-level data that would allow me to determine whether different strategies of service provision impact the magnitude of each subset of the unhoused population, though I am not committed to this idea. Overall, any data set related to homelessness or housing insecurity would be very interesting to explore given that these are my primary academic and professional interests.</p>
-<h2 id="research-proposal">Research Proposal</h2>
-<p>Does the criminalization of homelessness contribute to lower rates of unsheltered homelessness in urban communities? In this study, I plan to analyze the extent to which the community-level adoption of laws criminalizing homelessness through “quality of life” ordinances decrease rates of unsheltered homelessness. I hypothesize that the criminalization of homelessness does not significantly decrease rates of unsheltered homelessness in urban areas, thus demonstrating the futility of these punitive laws. Recently, there has been a proliferation of ordinances that criminalize the survival tactics of people experiencing homelessness in cities across the country. These laws, motivated by anti-homeless sentiment, funnel the unhoused into the homelessness-jail cycle, only further exacerbating their experience of homelessness. My sample is comprised of an aggregation of community-level data points for the over 400 Continuum of Cares (CoCs) across the United States, and I plan to filter these CoCs based on the “major_city” indicator variable in order to develop a sample of CoCs in urban communities. My unit of analysis is a Continuum of Care (CoC), which is a local planning body responsible for coordinating funding for homeless services in each community. The explanatory variables of interest are the number of municipal ordinances criminalizing homelessness in each community, which I plan to measure through the count of sleeping, camping, lying/sitting, and vehicle restriction laws (hou_pol_hlessconduct_sleep), count of loitering and vagrancy laws (hou_pol_hlessconduct_loiter), total count of prohibited conduct laws (hou_pol_hlessconduct_total), count of begging laws (hou_pol_hlessconduct_beg), and count of food sha=ring laws (hou_pol_hlessconduct_food). The outcome variable is the rate of unsheltered homeless per 10,000 people, which is coded as “pit_unshelt_pit_hud_share.” This variable is measured as the proportion of unsheltered homeless per 10,000 people in each CoC. If I do not observe a significant effect or if I observe a substantial increase in unsheltered homelessness over time in communities where there has been an increase in laws criminalizing homelessness, this would provide support for my hypothesis. However, if I observe a significant decrease in unsheltered homelessness over time in communities where there has been an increase in laws criminalizing homelessness, this would provide evidence against my hypothesis. When I run a regression of the laws criminalizing homelessness on the rates of unsheltered homelessness variable, a near-zero/zero or a positive, significant coefficient would demonstrate support for my hypothesis.</p>
-<h2 id="first-data-visualization">First Data Visualization</h2>
+<h2 id="introduction">Introduction</h2>
+<h2 id="the-data">The Data</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://broom.tidymodels.org/'>broom</a></span><span class='op'>)</span></span>
 <span><span class='va'>homelessdata</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"/Users/emorypaul/Downloads/05b_analysis_file_update_v1.csv"</span>, </span>
-<span>                             show_col_types <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>homelessdata</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>cocnumber</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"TX-500"</span>, </span>
-<span>                          <span class='st'>"TX-503"</span>, </span>
-<span>                          <span class='st'>"TX-600"</span>, </span>
-<span>                          <span class='st'>"TX-601"</span>, </span>
-<span>                          <span class='st'>"TX-603"</span>, </span>
-<span>                          <span class='st'>"TX-604"</span>, </span>
-<span>                          <span class='st'>"TX-607"</span>, </span>
-<span>                          <span class='st'>"TX-611"</span>, </span>
-<span>                          <span class='st'>"TX-624"</span>, </span>
-<span>                          <span class='st'>"TX-700"</span>, </span>
-<span>                          <span class='st'>"TX-701"</span><span class='op'>)</span>, </span>
-<span>         <span class='va'>year</span> <span class='op'>==</span> <span class='fl'>2015</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>hou_pol_hlessconduct_sleep</span>, </span>
-<span>             y <span class='op'>=</span> <span class='va'>pit_tot_unshelt_pit_hud</span>, </span>
-<span>             fill <span class='op'>=</span> <span class='va'>cocnumber</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Count of Sleeping, Camping, Lying/Sitting, and Vehicle Restriction Laws"</span>,</span>
-<span>       y <span class='op'>=</span> <span class='st'>"Total Unsheltered Homeless Pop."</span>,</span>
-<span>       title <span class='op'>=</span> <span class='st'>"Outcome of Ordinances Criminalizing Homelessness"</span><span class='op'>)</span></span></code></pre>
+<span>                             show_col_types <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span></code></pre>
 </div>
-<p><img src="index_files/figure-html5/unnamed-chunk-1-1.png" width="624" /></p>
 </div>
-<p>For my first data visualization, I subset the data to solely the Continuum of Cares (CoC) in Texas, a state notorious for laws criminalizing homelessness. I also subset it to the year of 2015. I then plotted the count of sleeping, camping, lying/sitting, and vehicle restriction laws in each CoC against the total unsheltered homeless population in each of those CoCs to visualize their relationship. Upon first glance, it appears that there does not seem to be a significant relationship between the variables, which is in line with my hypothesis. However, I will need to continue exploring the data and accounting for confounding variables to be able to draw firm conclusions.</p>
-<h2 id="results-from-one-analysis">Results from One Analysis</h2>
+<h2 id="filtering-and-mutating-the-data">Filtering and Mutating the Data</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>homelessdata</span> <span class='op'>&lt;-</span> <span class='va'>homelessdata</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>econ_urb_urbanicity</span> <span class='op'>==</span> <span class='fl'>3</span> <span class='op'>|</span> <span class='va'>econ_urb_urbanicity</span> <span class='op'>==</span> <span class='fl'>4</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>pit_tot_hless_pit_hud</span> <span class='op'>&lt;</span> <span class='fl'>30000</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>criminalization_laws <span class='op'>=</span> <span class='va'>hou_pol_hlessconduct_total</span> <span class='op'>+</span> </span>
 <span>                                <span class='va'>hou_pol_hlessconduct_sleep</span> <span class='op'>+</span> </span>
 <span>                                <span class='va'>hou_pol_hlessconduct_loiter</span> <span class='op'>+</span> </span>
 <span>                                <span class='va'>hou_pol_hlessconduct_beg</span> <span class='op'>+</span></span>
-<span>                                <span class='va'>hou_pol_hlessconduct_food</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>criminalization_laws</span>, </span>
-<span>             y <span class='op'>=</span> <span class='va'>pit_tot_hless_pit_hud</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> </span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"steelblue"</span><span class='op'>)</span> <span class='op'>+</span> </span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"red3"</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Total Number of Laws Criminalizing Homelessness"</span>,</span>
-<span>       y <span class='op'>=</span> <span class='st'>"Total Homeless Population"</span>,</span>
-<span>       title <span class='op'>=</span> <span class='st'>"Total Homeless Population vs. Criminalization of Homelessness in Urban Areas"</span><span class='op'>)</span></span>
+<span>                                <span class='va'>hou_pol_hlessconduct_food</span><span class='op'>)</span></span>
 <span></span>
-<span><span class='va'>homelessdata</span></span></code></pre>
+<span><span class='va'>homelessdata_urban</span> <span class='op'>&lt;-</span> <span class='va'>homelessdata</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>econ_urb_urbanicity</span> <span class='op'>==</span> <span class='fl'>3</span> <span class='op'>|</span> <span class='va'>econ_urb_urbanicity</span> <span class='op'>==</span> <span class='fl'>4</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>pit_tot_unshelt_pit_hud</span> <span class='op'>&lt;</span> <span class='fl'>20000</span><span class='op'>)</span></span></code></pre>
 </div>
-<p><img src="index_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
 </div>
-<p>As a reminder, my guiding research question is the following: Does the criminalization of homelessness contribute to lower rates of homelessness in urban communities? To begin to answer this question, I first filtered the data by urbanicity, which is the degree to which a community is considered urban. Given that my research is focused on urban communities, I filtered the data to only include Continuum of Cares (CoCs) in “Largely Urban” or “Major City” areas. I also filtered the data to exclude CoCs which had a total homeless population above 30,000 since these CoCs are outliers that skewed my past plots. To better analyze the extent of criminalization in each community, I created a new variable, “criminalization_laws,” that is the sum of all the ordinances criminalizing homelessness in each CoC, which includes the count of sleeping, camping, lying/sitting, and vehicle restriction laws, the count of loitering and vagrancy laws, the total count of prohibited conduct laws, the count of begging laws, and the count of food sharing laws.</p>
-<p>Thereafter, to obtain the above visualization, I plotted the total homeless population in each urban CoC against the total sum of the ordinances criminalizing homelessness in each urban CoC. The resulting scatter plot appears to show a positive relationship between total number of laws criminalizing homelessness and the total homeless population in each urban CoC, thus hinting at the conclusion that laws criminalizing homelessness likely do not significantly decrease rates of homelessness in urban areas. This initial finding is a great start to confirming my hypothesis, which is that the criminalization of homelessness does not significantly decrease rates of homelessness in urban areas, thus demonstrating the futility of these punitive laws. However, for future analyses, I should consider whether there is a confounding variable influencing the relationship between the criminalization of homelessness and the total homelessness population in each community. For example, do communities with large homeless populations enact laws criminalizing homelessness at higher rates than others on account of the magnitude of the crisis? If so, this could weaken my findings. I will plan to investigate deeper as I progress through my analysis.</p>
+<h2 id="summary-of-the-dependent-variable">Summary of the Dependent Variable</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>summary_homeless</span> <span class='op'>&lt;-</span> <span class='va'>homelessdata_urban</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>year</span>, </span>
+<span>             y <span class='op'>=</span> <span class='va'>pit_tot_unshelt_pit_hud</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='st'>"aquamarine4"</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Year"</span>,</span>
+<span>       y <span class='op'>=</span> <span class='st'>"Total Unsheltered Homeless Population"</span>,</span>
+<span>       title <span class='op'>=</span> <span class='st'>"Total Unsheltered Homeless Population Over Time"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>summary_homeless</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
+</div>
+<h2 id="results">Results</h2>
+<h2 id="main-regression">Main Regression</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>fit_main</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>pit_tot_unshelt_pit_hud</span> <span class='op'>~</span> <span class='va'>criminalization_laws</span>, data <span class='op'>=</span> <span class='va'>homelessdata_urban</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>var_labels</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"(Intercept)"</span> <span class='op'>=</span> <span class='st'>"Intercept"</span>,</span>
+<span>                <span class='st'>"criminalization_laws"</span> <span class='op'>=</span> <span class='st'>"Laws Criminalizing Homelessness"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'>modelsummary</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/modelsummary/man/modelsummary.html'>modelsummary</a></span><span class='op'>(</span><span class='va'>fit_main</span>,</span>
+<span>                           statistic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"s.e. = {std.error}"</span>,</span>
+<span>                                         <span class='st'>"p = {p.value}"</span><span class='op'>)</span>,</span>
+<span>                           coef_map <span class='op'>=</span> <span class='va'>var_labels</span>,</span>
+<span>                           gof_map <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"nobs"</span>, <span class='st'>"r.squared"</span>, <span class='st'>"adj.r.squared"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+ (1)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Intercept
+</td>
+<td style="text-align:center;">
+130.241
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+s.e. = 48.138
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+p = 0.007
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Laws Criminalizing Homelessness
+</td>
+<td style="text-align:center;">
+61.806
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+s.e. = 4.272
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1.5px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1.5px">
+p = &lt;0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+824
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.203
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.202
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="plot-of-main-regression">Plot of Main Regression</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>homeless_criminalization</span> <span class='op'>&lt;-</span> <span class='va'>homelessdata_urban</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>criminalization_laws</span>, </span>
+<span>             y <span class='op'>=</span> <span class='va'>pit_tot_unshelt_pit_hud</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> </span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"aquamarine4"</span><span class='op'>)</span> <span class='op'>+</span> </span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span>, se <span class='op'>=</span> <span class='cn'>FALSE</span>, color <span class='op'>=</span> <span class='st'>"brown3"</span>, size <span class='op'>=</span> <span class='fl'>1.5</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Total Number of Laws Criminalizing Homelessness"</span>,</span>
+<span>       y <span class='op'>=</span> <span class='st'>"Total Unsheltered Homeless Population"</span>,</span>
+<span>       title <span class='op'>=</span> <span class='st'>"Total Unsheltered Homeless Pop. vs. Criminalization in Urban CoCs"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>homeless_criminalization</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-5-1.png" width="624" /></p>
+</div>
+<h2 id="multiple-regression">Multiple Regression</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>fit_multiple</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>pit_tot_unshelt_pit_hud</span> <span class='op'>~</span> <span class='va'>criminalization_laws</span> <span class='op'>+</span> <span class='va'>hou_mkt_medrentgross_acs5yr</span> <span class='op'>+</span> <span class='va'>dem_pop_pop_census</span> <span class='op'>+</span> <span class='va'>econ_labor_medinc_census</span>, data <span class='op'>=</span> <span class='va'>homelessdata_urban</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>var_labels</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"(Intercept)"</span> <span class='op'>=</span> <span class='st'>"Intercept"</span>,</span>
+<span>                <span class='st'>"criminalization_laws"</span> <span class='op'>=</span> <span class='st'>"Laws Criminalizing Homelessness"</span>,</span>
+<span>                <span class='st'>"hou_mkt_medrentgross_acs5yr"</span> <span class='op'>=</span> <span class='st'>"Median Gross Rent (Renter-Occupied Housing Units)"</span>,</span>
+<span>                <span class='st'>"dem_pop_pop_census"</span> <span class='op'>=</span> <span class='st'>"Total Population"</span>,</span>
+<span>                <span class='st'>"econ_labor_medinc_census"</span> <span class='op'>=</span> <span class='st'>"Share of Renter-Occupied Households with an Eviction Filed"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'>modelsummary</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/modelsummary/man/modelsummary.html'>modelsummary</a></span><span class='op'>(</span><span class='va'>fit_multiple</span>,</span>
+<span>                           statistic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"s.e. = {std.error}"</span>,</span>
+<span>                                         <span class='st'>"p = {p.value}"</span><span class='op'>)</span>,</span>
+<span>                           coef_map <span class='op'>=</span> <span class='va'>var_labels</span>,</span>
+<span>                           gof_map <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"nobs"</span>, <span class='st'>"r.squared"</span>, <span class='st'>"adj.r.squared"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+ (1)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Intercept
+</td>
+<td style="text-align:center;">
+−1356.066
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+s.e. = 254.663
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+p = &lt;0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Laws Criminalizing Homelessness
+</td>
+<td style="text-align:center;">
+37.211
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+s.e. = 8.336
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+p = &lt;0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Median Gross Rent (Renter-Occupied Housing Units)
+</td>
+<td style="text-align:center;">
+2.628
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+s.e. = 0.509
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+p = &lt;0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total Population
+</td>
+<td style="text-align:center;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+s.e. = 0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+p = &lt;0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Share of Renter-Occupied Households with an Eviction Filed
+</td>
+<td style="text-align:center;">
+−17.781
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+s.e. = 8.355
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1.5px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1.5px">
+p = 0.035
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+206
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.477
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.467
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="plot-of-multiple-regression">Plot of Multiple Regression</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>homeless_rentprice</span> <span class='op'>&lt;-</span> <span class='va'>homelessdata_urban</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span>  <span class='va'>hou_mkt_medrentgross_acs5yr</span>, </span>
+<span>             y <span class='op'>=</span> <span class='va'>pit_tot_unshelt_pit_hud</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> </span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"dodgerblue3"</span><span class='op'>)</span> <span class='op'>+</span> </span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span>, se <span class='op'>=</span> <span class='cn'>FALSE</span>, color <span class='op'>=</span> <span class='st'>"firebrick2"</span>, size <span class='op'>=</span> <span class='fl'>1.5</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Total Number of Laws Criminalizing Homelessness"</span>,</span>
+<span>       y <span class='op'>=</span> <span class='st'>"Total Unsheltered Homeless Population"</span>,</span>
+<span>       title <span class='op'>=</span> <span class='st'>"Total Unsheltered Homeless Pop. vs. Criminalization in Urban CoCs"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>homeless_rentprice</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-7-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>homeless_censuspop</span> <span class='op'>&lt;-</span> <span class='va'>homelessdata_urban</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span>  <span class='va'>dem_pop_pop_census</span>, </span>
+<span>             y <span class='op'>=</span> <span class='va'>pit_tot_unshelt_pit_hud</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> </span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"dodgerblue3"</span><span class='op'>)</span> <span class='op'>+</span> </span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span>, se <span class='op'>=</span> <span class='cn'>FALSE</span>, color <span class='op'>=</span> <span class='st'>"firebrick2"</span>, size <span class='op'>=</span> <span class='fl'>1.5</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Total Number of Laws Criminalizing Homelessness"</span>,</span>
+<span>       y <span class='op'>=</span> <span class='st'>"Total Unsheltered Homeless Population"</span>,</span>
+<span>       title <span class='op'>=</span> <span class='st'>"Total Unsheltered Homeless Pop. vs. Criminalization in Urban CoCs"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>homeless_censuspop</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>homeless_eviction</span> <span class='op'>&lt;-</span> <span class='va'>homelessdata_urban</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>econ_labor_medinc_census</span>, </span>
+<span>             y <span class='op'>=</span> <span class='va'>pit_tot_unshelt_pit_hud</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> </span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"dodgerblue3"</span><span class='op'>)</span> <span class='op'>+</span> </span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span>, se <span class='op'>=</span> <span class='cn'>FALSE</span>, color <span class='op'>=</span> <span class='st'>"firebrick2"</span>, size <span class='op'>=</span> <span class='fl'>1.5</span><span class='op'>)</span> <span class='op'>+</span> </span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Total Number of Laws Criminalizing Homelessness"</span>,</span>
+<span>       y <span class='op'>=</span> <span class='st'>"Total Unsheltered Homeless Population"</span>,</span>
+<span>       title <span class='op'>=</span> <span class='st'>"Total Unsheltered Homeless Pop. vs. Criminalization in Urban CoCs"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>homeless_eviction</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-9-1.png" width="624" /></p>
+</div>
+<h2 id="conclusion">Conclusion</h2>
+<h2 id="works-cited">Works Cited</h2>
+<p>Nisar, Hiren, et al. “Market Predictors of Homelessness: How Housing and Community Factors Shape Homelessness Rates within Continuums of Care.” HUD: Office of Policy Development and Research, 2019, www.huduser.gov/portal/publications/Market-Predictors-of-Homelessness.html.</p>
+<p>Nisar, Hiren, et al. “Homeless Prediction Model.” HUD: Office of Policy Development and Research, 2019, <a href="https://www.huduser.gov/portal/datasets/hpmd.html" class="uri">https://www.huduser.gov/portal/datasets/hpmd.html</a>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
