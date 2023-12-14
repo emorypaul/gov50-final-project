@@ -13,7 +13,7 @@ With the increase of unsheltered homelessness in communities across the nation, 
 
 ## The Data
 
-My sample consists of an aggregation of community-level data points for the over 400 Continuum of Cares (CoCs) across the United States. CoCs, the unit of analysis for this study, are the local planning bodies responsible for coordinating funding for homeless services in each community. 
+My sample consists of an aggregation of community-level data points for the over 400 Continuum of Cares (CoCs) across the United States. CoCs, the unit of analysis for this study, are the local planning bodies responsible for coordinating funding for homeless services in each community. In the remainder of this study, I will use the term "community" and "CoC" interchangeably.
 
 The key dependent variable of interest is the total amount of unsheltered homelessness in each urban CoC, which is coded as “pit_tot_unshelt_pit_hud." This variable is collected through in-person surveys on a single night in January, hence this study's cross-sectional design. The key independent variable of interest is the total number of  municipal ordinances criminalizing homelessness in each CoC, which I measure through the count of sleeping, camping, lying/sitting, and vehicle restriction laws (hou_pol_hlessconduct_sleep), count of loitering and vagrancy laws (hou_pol_hlessconduct_loiter), total count of prohibited conduct laws (hou_pol_hlessconduct_total), count of begging laws (hou_pol_hlessconduct_beg), and count of food sha=ring laws (hou_pol_hlessconduct_food). These data points were collected through an analysis of each community's "quality of life" ordinances by the National Law Center on Homelessness and Poverty (NLCHP). Additionally, to identify possible confounders, I measured the relationship between median gross rent for renter-occupied housing units and total unsheltered homelessness in each community. This variable was collected through surveys by the Census Bureau. 
 
@@ -71,6 +71,8 @@ summary_homeless
 
 ## Main Regression
 
+The following output is a regression equation using my primary independent variable, total number of laws criminalizing homelessness. 
+
 ```{r}
 fit_main <- lm(pit_tot_unshelt_pit_hud ~ criminalization_laws, data = homelessdata_urban)
 
@@ -84,10 +86,12 @@ modelsummary::modelsummary(fit_main,
                            gof_map = c("nobs", "r.squared", "adj.r.squared"))
 ```
 
+As seen in the above table, the intercept has a coefficient of 130.241, which can be interpreted as the following: when a community does not have any laws criminalizing homelessness, the CoC has around 130 individuals experiencing unsheltered homelessness within its boundaries. Furthermore, the variable measuring the criminalization of homelessness in each community has a coefficient of 61.086, which can be interpreted as the following: each additional law criminalizing homelessness is correlated with an increase in a community's total unsheltered homelessness by around 61 persons. Given that the p-value for this coefficient, which is less than 0.001, is smaller than the pre-specified significance level, alpha = 0.05, the coefficient is statistically significant, thus supporting my hypothesis that there is a positive relationship between the criminalization of homelessness and the amount of homelessness in urban communities. However, this relationship can not be determined as causal given the potential presence of confounding variables.  
 
 
 ## Plot of Main Regression
 
+The following graph is a scatter plot displaying the above regression using the main independent variable, total number of laws criminalizing homelessness, plotted against . 
 
 ```{r}
 homeless_criminalization <- homelessdata_urban |>
@@ -97,13 +101,16 @@ homeless_criminalization <- homelessdata_urban |>
   geom_smooth(method = "lm", se = FALSE, color = "brown3", size = 1.5) +
    labs(x = "Total Number of Laws Criminalizing Homelessness",
        y = "Total Unsheltered Homeless Population",
-       title = "Criminalization of Homelessness in Urban CoCs (Figure 2")
+       title = "Criminalization of Homelessness in Urban CoCs (Figure 2)")
 
 homeless_criminalization
 ```
 
+As the plot shows, there is a positive correlation between criminalization of homelessness and the amount of homelessness in urban communities. 
 
 ## Multiple Regression
+
+Though my main regression demonstrates a strong relationship between laws criminalizing homelessness and amount of unsheltered homelessness in communities, it is important to consider potential confounding variables that may be skewing the relationship. Given that homelessness is fundamentally a housing problem, I decided to run another regression equation that includes the median gross rent of renter-occupied housing units in an effort to see the relationship between housing prices and amount of unsheltered homelessness in each community. The regression is displayed in the below output. 
 
 ```{r}
 fit_multiple <- lm(pit_tot_unshelt_pit_hud ~ criminalization_laws + hou_mkt_medrentgross_acs5yr,
@@ -120,8 +127,12 @@ modelsummary::modelsummary(fit_multiple,
                            gof_map = c("nobs", "r.squared", "adj.r.squared"))
 ```
 
+ 
 
 ## Plot of Multiple Regression
+
+The following graph is a scatter plot displaying the above regression using the confounding variable, median gross rent of renter-occupied housing units. 
+
 
 ```{r}
 homeless_rentprice <- homelessdata_urban |>
@@ -136,12 +147,22 @@ homeless_rentprice <- homelessdata_urban |>
 homeless_rentprice
 ```
 
-
+Confirming the regression output, there is a positive correlation between median gross rent and the amount of unsheltered homelessness in urban communities. 
 
 
 ## Conclusion
 
-Overall, there appears to be a positive relationship between the criminalization of homelessness through "quality of life" ordinances and the amount of unsheltered homelessness in urban communities. 
+Overall, there appears to be a positive, statistically significant relationship between the criminalization of homelessness through "quality of life" ordinances and the amount of unsheltered homelessness in urban communities
+
+indicates support for the claim that the criminalization of homelessness is harmful, though more research is needed to look into whether the laws criminalizing homeless are a cause or an effect of high rates of homelessness, also need to control more for population size and other confounding variables that may
+
+However, there are several limitations of muy study. For example, though the Point-In-Time (PIT) count that I used for the measurement of unsheltered homelessness is the most reliable measure of the data point that exists, it is still ... Furthermore, I used total unsheltered homelessness as opposed to unsheltered homeless per capita because.... Finally, the dataset that I used only went up to 2017, which limits the external validity of the study, though my results do still indicate trends that we are likely still seeing today.
+
+Unsheltered homelessness can be very hard to quantify given … and the PIT count isn’t the most reliable method 
+I focused on total homelessness as opposed to per capita in order to 
+
+To address these limitations and explore the observed relationship in greater depth, future research should
+
 
 
 ## Works Cited
